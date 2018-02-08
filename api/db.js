@@ -2,7 +2,7 @@
 const { parse } = require('url')
 
 // Packages
-const { MongoClient } = require('mongodb')
+const { MongoClient, ObjectId } = require('mongodb')
 
 // Ours
 const { databaseURL } = require('../config')
@@ -18,6 +18,9 @@ module.exports = async () => {
 		async insert(data) {
 			const res = await col.insertOne(data)
 			return res.insertedId.toHexString()
+		},
+		async fetch(hex) {
+			return await col.findOne({ _id: ObjectId(hex) })
 		}
 	}
 }
