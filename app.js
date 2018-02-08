@@ -13,6 +13,7 @@ const handle = app.getRequestHandler()
 // Main
 const start = async () => {
 	await app.prepare()
+
 	return router(
 		// API ->
 		post('/api/upload', upload),
