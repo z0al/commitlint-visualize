@@ -6,13 +6,13 @@ const listen = require('test-listen')
 const request = require('request-promise-native')
 
 // Ours
-const db = require('../utils/db')
 const api = require('./upload')
 
 let service, url
+process.env.DATABASE_URL = 'mongodb://user:password@host:1234/database'
 
 beforeAll(async () => {
-	const client = await db()
+	const client = await require('../utils/db')()
 
 	// Injects DB client
 	const wrap = handler => async (req, res) => {

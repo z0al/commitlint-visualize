@@ -7,9 +7,12 @@ const MongoClient = {
 						toHexString: jest.fn().mockReturnValue('<object_id>')
 					}
 				}),
-				findOne: jest.fn().mockResolvedValue({
-					_id: '<object_id>'
-				})
+				findOne: jest
+					.fn()
+					.mockResolvedValueOnce({
+						_id: '<object_id>'
+					})
+					.mockResolvedValueOnce(null)
 			})
 		})
 	})

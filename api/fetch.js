@@ -8,12 +8,11 @@ const { send } = require('micro')
  * @param {*} res
  */
 const fetch = async (req, res) => {
-	try {
-		const record = await req.db.fetch(req.params.id)
-		return send(res, 200, record)
-	} catch (err) {
-		return send(res, 404)
-	}
+	const report = await req.db.fetch(req.params.id)
+
+	if (!report) return send(res, 404)
+
+	return send(res, 200, report)
 }
 
 module.exports = fetch

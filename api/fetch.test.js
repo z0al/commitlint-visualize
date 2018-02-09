@@ -8,12 +8,12 @@ const { router, get } = require('microrouter')
 
 // Ours
 const api = require('./fetch')
-const db = require('../utils/db')
 
 let service, url
+process.env.DATABASE_URL = 'mongodb://user:password@host:1234/database'
 
 beforeAll(async () => {
-	const client = await db()
+	const client = await require('../utils/db')()
 	// Injects DB client
 	const wrap = handler => async (req, res) => {
 		req.db = client
@@ -31,4 +31,10 @@ afterAll(() => {
 test('returns report details', async () => {
 	const body = await request.get(`${url}/id`)
 	return expect(JSON.parse(body)).toEqual({ _id: '<object_id>' })
+})
+
+test('returns 404 if not found', async () => {
+	return expect(
+		request.get(`${url}/id`, { resolveWithFullResponse: true })
+	).rejects.toEqual(expect.objectContaining({ statusCode: 404 }))
 })
