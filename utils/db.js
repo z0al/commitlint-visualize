@@ -5,7 +5,7 @@ const { parse } = require('url')
 const { MongoClient, ObjectId } = require('mongodb')
 
 // Ours
-const { databaseURL } = require('../config')
+const { databaseURL } = require('./config')
 
 module.exports = async () => {
 	const dbName = parse(databaseURL).pathname.slice(1)
