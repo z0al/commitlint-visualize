@@ -1,10 +1,7 @@
 // Packages
 const { send, json } = require('micro')
 const Joi = require('joi')
-const validator = require('micro-joi')
-
-// Ours
-const setup = require('./db')
+const microJoi = require('micro-joi')
 
 /**
  * Report uploading API
@@ -13,17 +10,16 @@ const setup = require('./db')
  * @param {*} res
  */
 const upload = async (req, res) => {
-	const db = await setup()
 	const report = await json(req)
-	const id = await db.insert(report)
+	const _id = await req.db.insert(report)
 
-	return send(res, 200, { id })
+	return send(res, 200, { _id })
 }
 
 /**
  * Validate JSON body
  */
-const wrap = validator(
+const validate = microJoi(
 	Joi.object()
 		.keys({
 			// Context (mainly to construct commit URLs)
@@ -40,23 +36,23 @@ const wrap = validator(
 
 					errors: Joi.array()
 						.items(
-							Joi.object().keys({
-								level: Joi.number(),
-								valid: Joi.boolean(),
-								name: Joi.string().required(),
-								message: Joi.string().required()
-							})
+							Joi.object()
+								.keys({
+									name: Joi.string().required(),
+									message: Joi.string().required()
+								})
+								.unknown()
 						)
 						.default([]),
 
 					warnings: Joi.array()
 						.items(
-							Joi.object().keys({
-								level: Joi.number(),
-								valid: Joi.boolean(),
-								name: Joi.string().required(),
-								message: Joi.string().required()
-							})
+							Joi.object()
+								.keys({
+									name: Joi.string().required(),
+									message: Joi.string().required()
+								})
+								.unknown()
 						)
 						.default([])
 				})
@@ -65,4 +61,4 @@ const wrap = validator(
 		.label('report')
 )
 
-module.exports = wrap(upload)
+module.exports = validate(upload)
