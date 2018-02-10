@@ -1,5 +1,5 @@
 {
-	"name": "commitlint-visualizer",
+	"name": "commitlint-visualize",
 	"version": "1.0.0",
 	"private": true,
 	"main": "app.js",
