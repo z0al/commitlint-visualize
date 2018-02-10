@@ -12,6 +12,7 @@ Start the app server
 
 ```bash
 $ export DATABASE_URL=mongodb://<user>:<password>@<host>:<port>/<database-name>
+$ npm run build
 $ npm start
 > micro: Accepting connections on port 3000
 ```
