@@ -13,7 +13,7 @@ const upload = async (req, res) => {
 	const report = await json(req)
 	const _id = await req.db.insert(report)
 
-	return send(res, 200, { _id })
+	return send(res, 200, { url: `/reports/${_id}` })
 }
 
 /**

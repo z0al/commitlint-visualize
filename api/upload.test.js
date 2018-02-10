@@ -36,5 +36,5 @@ test('returns report ID', async () => {
 		}
 	})
 
-	expect(body._id).toEqual('<object_id>')
+	expect(body.url).toEqual('/reports/<object_id>')
 })
