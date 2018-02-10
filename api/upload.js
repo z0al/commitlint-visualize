@@ -32,6 +32,7 @@ const validate = microJoi(
 			// List of commits
 			commits: Joi.array().items(
 				Joi.object().keys({
+					sha: Joi.string().required(),
 					valid: Joi.boolean().required(),
 
 					errors: Joi.array()

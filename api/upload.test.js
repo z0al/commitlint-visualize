@@ -32,7 +32,7 @@ test('returns report ID', async () => {
 	const body = await request.post(url, {
 		json: {
 			context: { repo: 'owner/repo' },
-			commits: [{ valid: true, errors: [], warnings: [] }]
+			commits: [{ valid: true, sha: 'abc', errors: [], warnings: [] }]
 		}
 	})
 
